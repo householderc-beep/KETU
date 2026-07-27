@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KETU 88.9 FM — East Texas University Radio</title>
+<title>KETU 90.1 FM — East Texas University Radio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Special+Elite&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -196,81 +196,6 @@
   }
   @media (prefers-reduced-motion:reduce){ .wire-text{transition:none;} }
 
-  /* ---------- broadcast log (read-only, fixed order) ---------- */
-  .log{
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    overflow:hidden;
-    margin-bottom:52px;
-  }
-  .log-row{
-    display:grid;
-    grid-template-columns:48px 1fr auto;
-    align-items:center;
-    gap:14px;
-    padding:13px 16px;
-    border-bottom:1px solid var(--line);
-    background:var(--pine-900);
-  }
-  .log-row:last-child{border-bottom:none;}
-  .log-row.is-onair{background:var(--pine-800);}
-  .log-index{
-    font-family:'Special Elite',cursive;
-    font-size:12px;
-    color:var(--parchment-dim);
-  }
-  .log-row.is-onair .log-index{color:var(--rust-bright);}
-  .log-title{
-    font-family:'Oswald',sans-serif;
-    font-weight:500;
-    font-size:15.5px;
-    color:var(--parchment);
-    min-width:0;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  }
-  .log-row.is-onair .log-title{color:var(--rust-bright);}
-  .log-onair-flag{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-family:'Special Elite',cursive;
-    font-size:10.5px;
-    letter-spacing:0.08em;
-    color:var(--rust-bright);
-  }
-  .log-onair-flag .dot{
-    width:6px;height:6px;border-radius:50%;background:var(--rust-bright);
-    animation:pulse 1.6s ease-in-out infinite;
-  }
-  @media (prefers-reduced-motion:reduce){ .log-onair-flag .dot{animation:none;} }
-  .log-cat{
-    font-family:'Special Elite',cursive;
-    font-size:11px;
-    color:var(--parchment-dim);
-    border:1px solid var(--line);
-    padding:3px 8px;
-    border-radius:2px;
-    white-space:nowrap;
-  }
-  @media (max-width:560px){
-    .log-row{grid-template-columns:32px 1fr; row-gap:6px;}
-    .log-cat{grid-column:2; justify-self:start;}
-  }
-
-  .empty-state{
-    border:1px dashed var(--line);
-    border-radius:var(--radius);
-    padding:28px 22px;
-    font-family:'Special Elite',cursive;
-    font-size:13px;
-    color:var(--parchment-dim);
-    line-height:1.8;
-    margin-bottom:52px;
-  }
-  .empty-state strong{color:var(--rust-bright); display:block; margin-bottom:6px; font-size:14px;}
-
   /* ---------- sticky player: tune in/out only ---------- */
   .player-bar{
     position:fixed; left:0; right:0; bottom:0;
@@ -304,11 +229,6 @@
   .now-playing .np-title{
     font-family:'Oswald',sans-serif; font-size:15px; font-weight:500;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
-  .now-playing .np-next{
-    font-family:'Inter',sans-serif; font-size:11.5px; color:var(--parchment-dim);
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    margin-top:2px;
   }
 
   .signal{display:flex; align-items:flex-end; gap:3px; height:22px; flex:none;}
@@ -351,7 +271,7 @@
 
 <header class="topbar">
   <span>EAST TEXAS UNIVERSITY STUDENT BROADCAST</span>
-  <span class="call-sign">88.9 FM · KETU · NACOGDOCHES CO.</span>
+  <span class="call-sign">90.1 FM · KETU · PINEBOX, GOLAN CO.</span>
 </header>
 
 <section class="hero">
@@ -373,10 +293,10 @@
         <line x1="50" y1="122" x2="62" y2="130"/>
         <line x1="110" y1="62" x2="118" y2="72"/>
       </g>
-      <text x="190" y="34" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">88</text>
-      <text x="352" y="194" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">96</text>
-      <text x="190" y="352" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">104</text>
-      <text x="30" y="194" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">80</text>
+      <text x="190" y="34" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">90</text>
+      <text x="352" y="194" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">98</text>
+      <text x="190" y="352" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">106</text>
+      <text x="30" y="194" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">82</text>
 
       <circle cx="190" cy="190" r="118" fill="var(--pine-950)" stroke="var(--rust)" stroke-width="1.5"/>
 
@@ -385,15 +305,15 @@
         <circle cx="190" cy="190" r="9" fill="var(--brass)"/>
       </g>
     </svg>
-    <div class="dial-freq-readout">88.9 MHz</div>
+    <div class="dial-freq-readout">90.1 MHz</div>
   </div>
 
   <div class="hero-copy">
     <p class="eyebrow"><span class="rec-dot" aria-hidden="true"></span> ON AIR NOW</p>
     <h1>KETU<span>.</span></h1>
-    <p class="freq-line">Voice of the Piney Woods, 88.9 FM</p>
+    <p class="freq-line">Voice of the Piney Woods, 90.1 FM</p>
     <p class="typewriter-line">
-      Broadcasting out of the basement of the Old Comm building, whenever the transmitter
+      Broadcasting out of the basement of the Hearst Art and Journalism Center, whenever the transmitter
       feels like cooperating. Station idents, campus bulletins, and whatever else drifts
       in over the antenna after dark.
       <span class="no-requests">The program runs the order it runs. No requests, no skipping.</span>
@@ -415,15 +335,6 @@
   </div>
 </section>
 
-<main class="section" id="library">
-  <div class="section-head">
-    <h2>Broadcast Log</h2>
-    <span class="count" id="track-count">0 cuts filed</span>
-  </div>
-  <p class="section-sub" id="log-sub" hidden>Fixed program order. What's on air is highlighted live below.</p>
-  <div id="log-root"></div>
-</main>
-
 <footer>
   KETU is a fictional student station built for a Savage Worlds Adventure Edition
   campaign set at East Texas University. Not a real broadcaster. Do not attempt to tune in on an actual radio.
@@ -438,7 +349,6 @@
   <div class="now-playing">
     <div class="np-label"><span id="onair-dot" class="rec-dot" style="display:none;"></span><span id="np-status">SIGNAL — NOT TUNED IN</span></div>
     <div class="np-title" id="np-title">Press tune in to join the broadcast</div>
-    <div class="np-next" id="np-next"></div>
   </div>
 
   <div class="signal" id="signal" aria-hidden="true">
@@ -456,24 +366,24 @@
 
 <script>
 /* =========================================================================
-   KETU BROADCAST LOG
-   This array IS the play order — the station runs it top to bottom, on a
-   loop, forever. Listeners can't pick a track or skip; they can only tune
-   in or out. Add one entry per clip, in the order you want it to air.
-   `src` is the path to the audio file relative to this page.
+   PLAYLIST
+   Tracks are read from playlist.txt (same folder as this page) instead of
+   being listed here. In that file: a line like [Category Name] starts a
+   new group, and every non-empty line under it is an audio filename (must
+   live in the /audio folder). The order in playlist.txt IS the broadcast
+   order — top to bottom, then loops. Listeners can't pick a track or skip;
+   they can only tune in or out, and only ever see what's on air right now.
    ========================================================================= */
-const TRACKS = [
-  { title: "In the Wire", category: "Music & Ambience", src: "audio/In the Wire.m4a" },
-  { title: "Bloody Mary", category: "Music & Ambience", src: "audio/Bloody Mary.mp3" },
-  { title: "Can't Wake", category: "Music & Ambience", src: "audio/Can't Wake.mp3" },
-  { title: "Closer Every Year", category: "Music & Ambience", src: "audio/Closer Every Year.mp3" },
-  { title: "Don't Answer the Call", category: "Music & Ambience", src: "audio/Don't Answer the Call.mp3" },
-  { title: "Full Moon Fever", category: "Music & Ambience", src: "audio/Full Moon Fever.mp3" },
-  { title: "Goat-Sucker", category: "Music & Ambience", src: "audio/Goat-Sucker.mp3" },
-  // { title: "Station ID — 88.9 KETU", category: "Station IDs", src: "audio/station-id-01.mp3" },
-  // { title: "Campus Safety Bulletin", category: "Bulletins & PSAs", src: "audio/psa-campus-safety.mp3" },
-  // { title: "Nine O'Clock Campus News", category: "News Break", src: "audio/news-0900.mp3" },
-];
+const PLAYLIST_FILE = 'playlist.txt';
+
+/* Categories in this list show a generic label in the Now Playing spot
+   instead of the actual clip title — e.g. so a specific PSA script doesn't
+   get spoiled/named on screen. Match is case-insensitive against the
+   category name used in playlist.txt. Add or edit entries as needed. */
+const GENERIC_NOWPLAYING = {
+  'station ids': 'KETU Station ID',
+  'bulletins & psas': 'Station Announcement',
+};
 
 /* Fixed reference point the loop counts from. Any date works — it just has
    to stay the same so everyone's browser computes the same "now" position. */
@@ -483,9 +393,8 @@ const BROADCAST_EPOCH_MS = Date.UTC(2026, 0, 1, 0, 0, 0);
    slow connection), assume this many seconds so the schedule doesn't stall. */
 const FALLBACK_DURATION_SEC = 180;
 
-const logRoot = document.getElementById('log-root');
-const logSub = document.getElementById('log-sub');
-const trackCountEl = document.getElementById('track-count');
+let TRACKS = [];
+
 const audio = document.getElementById('audio-el');
 const tuneBtn = document.getElementById('tune-btn');
 const tuneOnIcon = document.getElementById('tune-on-icon');
@@ -493,7 +402,6 @@ const tuneOffIcon = document.getElementById('tune-off-icon');
 const npStatus = document.getElementById('np-status');
 const onairDot = document.getElementById('onair-dot');
 const npTitle = document.getElementById('np-title');
-const npNext = document.getElementById('np-next');
 const timeCurrent = document.getElementById('time-current');
 const timeTotal = document.getElementById('time-total');
 const progressFill = document.getElementById('progress-fill');
@@ -513,37 +421,41 @@ function formatTime(s){
   return `${m}:${sec}`;
 }
 
-function renderLog(){
-  if(TRACKS.length === 0){
-    logRoot.innerHTML = `
-      <div class="empty-state">
-        <strong>Nothing filed on the log yet.</strong>
-        Open index.html and add entries to the TRACKS list near the bottom of the
-        file, in the order you want them to air. Drop your audio files in an
-        /audio folder alongside this page and list them there.
-      </div>`;
-    trackCountEl.textContent = '0 cuts filed';
-    return;
+function titleFromFilename(filename){
+  const noExt = filename.replace(/\.[^/.]+$/, '');
+  return noExt.replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function getDisplayTitle(track){
+  const key = (track.category || '').trim().toLowerCase();
+  return GENERIC_NOWPLAYING[key] || track.title;
+}
+
+async function loadPlaylist(){
+  try{
+    const res = await fetch(PLAYLIST_FILE, { cache: 'no-store' });
+    if(!res.ok) throw new Error('playlist.txt not found');
+    const text = await res.text();
+    let currentCategory = 'Uncategorized';
+    TRACKS = text.split('\n')
+      .map(l => l.trim())
+      .filter(l => l.length > 0)
+      .reduce((acc, line) => {
+        const headerMatch = line.match(/^\[(.+)\]$/);
+        if(headerMatch){
+          currentCategory = headerMatch[1].trim();
+        }else{
+          acc.push({
+            title: titleFromFilename(line),
+            category: currentCategory,
+            src: `audio/${line}`,
+          });
+        }
+        return acc;
+      }, []);
+  }catch(e){
+    TRACKS = [];
   }
-
-  trackCountEl.textContent = `${TRACKS.length} cut${TRACKS.length===1?'':'s'} filed`;
-  logSub.hidden = false;
-
-  const log = document.createElement('div');
-  log.className = 'log';
-  TRACKS.forEach((t, i) => {
-    const row = document.createElement('div');
-    row.className = 'log-row';
-    row.setAttribute('data-track-index', i);
-    row.innerHTML = `
-      <span class="log-index">${String(i + 1).padStart(3,'0')}</span>
-      <span class="log-title">${t.title}</span>
-      <span class="log-cat">${t.category || ''}</span>
-    `;
-    log.appendChild(row);
-  });
-  logRoot.innerHTML = '';
-  logRoot.appendChild(log);
 }
 
 function getDuration(src){
@@ -580,31 +492,14 @@ function getLiveSchedulePosition(){
   return { idx, offset };
 }
 
-function updateLogHighlight(idx){
-  document.querySelectorAll('.log-row').forEach(row => {
-    const isOn = Number(row.getAttribute('data-track-index')) === idx;
-    row.classList.toggle('is-onair', isOn);
-    const flag = row.querySelector('.log-onair-flag');
-    if(isOn && !flag){
-      const span = document.createElement('span');
-      span.className = 'log-onair-flag';
-      span.innerHTML = '<span class="dot"></span>ON AIR';
-      row.appendChild(span);
-    } else if(!isOn && flag){
-      flag.remove();
-    }
-  });
-}
-
 function refreshOnAirDisplay(){
-  if(TRACKS.length === 0) return;
-  const { idx } = getLiveSchedulePosition();
-  updateLogHighlight(idx);
-  const next = TRACKS[(idx + 1) % TRACKS.length];
-  if(!tunedIn){
-    npTitle.textContent = TRACKS[idx].title;
+  if(TRACKS.length === 0){
+    npTitle.textContent = 'Nothing scheduled — add files to playlist.txt';
+    return;
   }
-  npNext.textContent = next ? `Up next: ${next.title}` : '';
+  if(tunedIn) return; // while tuned in, tuneIn()/the resync loop own this text
+  const { idx } = getLiveSchedulePosition();
+  npTitle.textContent = getDisplayTitle(TRACKS[idx]);
 }
 
 function tuneIn(){
@@ -621,7 +516,7 @@ function tuneIn(){
   tunedIn = true;
   npStatus.textContent = 'ON AIR';
   onairDot.style.display = 'inline-block';
-  npTitle.textContent = TRACKS[idx].title;
+  npTitle.textContent = getDisplayTitle(TRACKS[idx]);
   tuneOnIcon.style.display = 'none';
   tuneOffIcon.style.display = 'block';
   tuneBtn.setAttribute('aria-label', 'Tune out');
@@ -738,8 +633,7 @@ function updateWire(){
 setInterval(updateWire, 1000);
 loadNews();
 
-renderLog();
-buildSchedule().then(refreshOnAirDisplay);
+loadPlaylist().then(() => buildSchedule().then(refreshOnAirDisplay));
 </script>
 
 </body>
