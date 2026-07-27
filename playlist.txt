@@ -6,8 +6,116 @@ Closer Every Year.mp3
 Don't Answer the Call.mp3
 Full Moon Fever.mp3
 Goat-Sucker.mp3
+_The Bell Witch_.mp3
+Already Found You.mp3
+Behind the Walls.mp3
+Black Howler.mp3
+brazenHussey.m4a
+Can't Sleep slow.mp3
+Can't Sleep, Can't Sleep rock.mp3
+Can't Sleep.mp3
+Cinema.mp3
+counsel.mp3
+Count the Inches.mp3
+Don't Bring Shovels Past the.mp3
+ElTejano.mp3
+First Taste.mp3
+Ghouls in the Graveyard.mp3
+Hellhound at the Door.mp3
+Highway Ninety-Six.mp3
+It Already Knows the Way.mp3
+It Already Knows the Way2.mp3
+Kneelin' in the Dark.mp3
+MelonHeads.mp3
+Mom's Diner.mp3
+Nope, Not Doin' It.mp3
+Out.mp3
+Outrun the Dogman.mp3
+Redcap.mp3
+She's Callin'.mp3
+She's the Fire.mp3
+Snake People of Blackburn.mp3
+Somebody's Still Livin' Here.mp3
+Somethin' in the Fog.mp3
+Somethin' in the Water.mp3
+Somethin's Under.mp3
+The Banshee's Keen.mp3
+The Deal Comes Due.mp3
+The Devil Don't Forget.mp3
+The Ghost Ship2.mp3
+The Grass Don't Let You Leave.mp3
+The Hidebehind.mp3
+The Hungry Winter.mp3
+The Scarecrow Man.mp3
+The Woods Have Rules.mp3
+Too Many Legs.mp3
+Two Ghosts Ridin' in the Dark.mp3
+Vampire Blues.mp3
+Waitin' on the Dark slow2.mp3
+Waitin' on the Dark.mp3
+Ward Twelve.mp3
+Whistle on the Blackburn Line.mp3
+Won't You Let Us In_.mp3
+Wrong Number.mp3
 
 [Station IDs]
+SID1.mp3
+SID2.mp3
+SID3.mp3
+SID4.mp3
+SID5.mp3
 
 [Bulletins & PSAs]
-brazenHussey.m4a
+PSA1.mp3
+PSa2.mp3
+PSa3.mp3
+PSA4.mp3
+PSA5.mp3
+PSA6.mp3
+
+[DJ Patter]
+Patter Im AI.mp3
+Patter Lock doors.mp3
+Patter Night guard.mp3
+Patter shoutout.mp3
+Patter Weather.mp3
+Patter What I look like.mp3
+patter1.mp3
+Patter2.mp3
+patter3.mp3
+patter4.mp3
+patter5.mp3
+patter6.mp3
+patter7.mp3
+Patter 3 people.mp3
+Patter Blood drive.mp3
+patter bring snacks.mp3
+patter earworm.mp3
+Patter Have a plan.mp3
+PatterC Camping.mp3
+PatterC car chase.mp3
+PatterC RavenEats.mp3
+PatterC sound outside.mp3
+PatterC thicket.mp3
+
+[Ads & Sponsors]
+GenMart Groceries.mp3
+NNad.mp3
+SCCAd.mp3
+TrustMe.mp3
+
+[Cryptid Hotline]
+banshee answer.mp3
+Banshee question.mp3
+Bell witch answer.mp3
+Bell Witch question.mp3
+Chup answer.mp3
+Chup question.mp3
+Dogman answer.mp3
+Dogman question.mp3
+hidebehind answer.mp3
+Hidebehind question.mp3
+mermaid question.mp3
+siren answer.mp3
+Wendigo answer.mp3
+Wendigo question.mp3
