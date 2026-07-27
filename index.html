@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KETU 88.9 FM — East Texas University Radio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Special+Elite&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine-950:#11190E;
+    --pine-900:#162014;
+    --pine-800:#1F2E1A;
+    --pine-700:#2A3E24;
+    --parchment:#E8DFC5;
+    --parchment-dim:#B8AF97;
+    --rust:#B5652D;
+    --rust-bright:#D97F3E;
+    --maroon:#6E2A2A;
+    --maroon-bright:#8C3838;
+    --brass:#C9A227;
+    --line:rgba(232,223,197,0.14);
+    --radius:2px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--pine-950);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(181,101,45,0.08), transparent 55%),
+      radial-gradient(ellipse at 80% 100%, rgba(110,42,42,0.10), transparent 55%);
+    color:var(--parchment);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:96px; /* room for sticky player */
+  }
+
+  a{color:inherit;}
+
+  /* ---------- texture overlay ---------- */
+  .static-overlay{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.035;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index:999;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 28px;
+    border-bottom:1px solid var(--line);
+    font-family:'Special Elite',cursive;
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:var(--parchment-dim);
+  }
+  .topbar .call-sign{color:var(--rust-bright);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns:minmax(260px,420px) 1fr;
+    align-items:center;
+    gap:48px;
+    padding:64px 28px 72px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr; padding-top:40px; gap:32px;}
+    .dial-wrap{margin:0 auto;}
+  }
+
+  .dial-wrap{position:relative; width:100%; max-width:380px; aspect-ratio:1/1; margin-left:auto; user-select:none;}
+  .dial-wrap svg{width:100%; height:100%; display:block;}
+  .dial-freq-readout{
+    position:absolute; left:50%; bottom:-6px; transform:translateX(-50%);
+    font-family:'Oswald',sans-serif; font-weight:600; font-size:15px;
+    letter-spacing:0.12em; color:var(--brass);
+    background:var(--pine-900); padding:4px 14px; border:1px solid var(--line); border-radius:2px;
+  }
+  .needle{transform-origin:190px 190px; transition:transform 0.6s cubic-bezier(.2,.9,.25,1);}
+  .dial-wrap:hover .needle, .dial-wrap:focus-within .needle{transform:rotate(3deg);}
+  @media (prefers-reduced-motion:reduce){ .needle{transition:none;} }
+
+  .hero-copy .eyebrow{
+    font-family:'Special Elite',cursive;
+    color:var(--rust-bright);
+    font-size:13px;
+    letter-spacing:0.14em;
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:14px;
+  }
+  .rec-dot{width:8px;height:8px;border-radius:50%;background:var(--maroon-bright);
+    box-shadow:0 0 8px var(--maroon-bright);
+    animation:pulse 2.2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  @media (prefers-reduced-motion:reduce){ .rec-dot{animation:none;} }
+
+  .hero-copy h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    font-size:clamp(48px,8vw,96px);
+    line-height:0.92;
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+    color:var(--parchment);
+  }
+  .hero-copy h1 span{color:var(--rust-bright);}
+  .hero-copy .freq-line{
+    font-family:'Oswald',sans-serif;
+    font-size:clamp(18px,2.4vw,26px);
+    color:var(--parchment-dim);
+    margin:0 0 22px;
+    font-weight:500;
+    letter-spacing:0.02em;
+  }
+  .typewriter-line{
+    font-family:'Special Elite',cursive;
+    font-size:15px;
+    color:var(--parchment-dim);
+    max-width:46ch;
+    line-height:1.7;
+    border-left:2px solid var(--maroon);
+    padding-left:16px;
+  }
+
+  /* ---------- section shell ---------- */
+  .section{max-width:1180px; margin:0 auto; padding:0 28px 60px;}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px; margin-bottom:28px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:26px;
+    letter-spacing:0.01em;
+    margin:0;
+    color:var(--parchment);
+  }
+  .section-head .count{
+    font-family:'Special Elite',cursive;
+    font-size:12px;
+    color:var(--parchment-dim);
+  }
+
+  /* ---------- card catalog track list ---------- */
+  .catalog{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:14px;
+    margin-bottom:52px;
+  }
+  .card{
+    background:var(--pine-900);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px 16px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    cursor:pointer;
+    text-align:left;
+    color:inherit;
+    font:inherit;
+    position:relative;
+    transition:border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+  }
+  .card::before{
+    content:attr(data-index);
+    position:absolute; top:14px; right:16px;
+    font-family:'Special Elite',cursive;
+    font-size:11px;
+    color:var(--parchment-dim);
+    opacity:0.6;
+  }
+  .card:hover, .card:focus-visible{
+    border-color:var(--rust);
+    background:var(--pine-800);
+    transform:translateY(-2px);
+  }
+  .card:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  .card.is-playing{border-color:var(--rust-bright); background:var(--pine-800);}
+  .card.is-playing .card-title{color:var(--rust-bright);}
+
+  .card-top{display:flex; align-items:center; gap:10px;}
+  .card-play-icon{
+    width:28px; height:28px; flex:none;
+    border:1px solid var(--line);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--parchment-dim);
+    background:var(--pine-950);
+  }
+  .card.is-playing .card-play-icon{border-color:var(--rust-bright); color:var(--rust-bright);}
+
+  .card-title{
+    font-family:'Oswald',sans-serif;
+    font-weight:500;
+    font-size:16px;
+    letter-spacing:0.01em;
+    color:var(--parchment);
+    padding-right:34px;
+  }
+  .card-meta{
+    font-family:'Special Elite',cursive;
+    font-size:11.5px;
+    color:var(--parchment-dim);
+    letter-spacing:0.03em;
+  }
+
+  /* ---------- empty state ---------- */
+  .empty-state{
+    border:1px dashed var(--line);
+    border-radius:var(--radius);
+    padding:28px 22px;
+    font-family:'Special Elite',cursive;
+    font-size:13px;
+    color:var(--parchment-dim);
+    line-height:1.8;
+  }
+  .empty-state strong{color:var(--rust-bright); display:block; margin-bottom:6px; font-size:14px;}
+
+  /* ---------- sticky tape-deck player ---------- */
+  .player-bar{
+    position:fixed; left:0; right:0; bottom:0;
+    background:var(--pine-900);
+    border-top:1px solid var(--line);
+    padding:12px 20px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    z-index:50;
+  }
+  .player-bar .transport{display:flex; align-items:center; gap:10px; flex:none;}
+  .transport button{
+    width:38px; height:38px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--pine-950);
+    color:var(--parchment);
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color 0.15s ease, color 0.15s ease;
+  }
+  .transport button:hover{border-color:var(--rust-bright); color:var(--rust-bright);}
+  .transport button:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  #play-btn{width:44px; height:44px; background:var(--maroon); border-color:var(--maroon);}
+  #play-btn:hover{background:var(--maroon-bright); border-color:var(--maroon-bright); color:var(--parchment);}
+
+  .now-playing{min-width:0; flex:1 1 220px;}
+  .now-playing .np-label{
+    font-family:'Special Elite',cursive; font-size:10.5px; color:var(--rust-bright);
+    letter-spacing:0.1em; margin-bottom:2px;
+  }
+  .now-playing .np-title{
+    font-family:'Oswald',sans-serif; font-size:15px; font-weight:500;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+
+  .scrub{display:flex; align-items:center; gap:10px; flex:2 1 260px; min-width:0;}
+  .scrub time{font-family:'Special Elite',cursive; font-size:11px; color:var(--parchment-dim); flex:none;}
+  .scrub input[type=range]{
+    -webkit-appearance:none; appearance:none;
+    width:100%; height:3px; background:var(--pine-700); border-radius:2px; outline:none;
+  }
+  .scrub input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:12px; height:12px; border-radius:50%;
+    background:var(--brass); cursor:pointer; margin-top:-4.5px;
+  }
+  .scrub input[type=range]::-moz-range-thumb{
+    width:12px; height:12px; border-radius:50%; background:var(--brass); border:none; cursor:pointer;
+  }
+
+  .vu{display:flex; align-items:flex-end; gap:3px; height:22px; flex:none;}
+  .vu span{
+    width:4px; background:var(--pine-700); border-radius:1px;
+    transition:height 0.12s ease, background 0.12s ease;
+    height:4px;
+  }
+  .vu.is-active span{background:var(--rust-bright);}
+
+  @media (max-width:720px){
+    .player-bar{flex-wrap:wrap; padding:10px 14px;}
+    .now-playing{order:1; flex-basis:60%;}
+    .transport{order:2;}
+    .vu{order:3;}
+    .scrub{order:4; flex-basis:100%;}
+  }
+
+  footer{
+    max-width:1180px; margin:0 auto; padding:20px 28px 40px;
+    font-family:'Special Elite',cursive; font-size:11.5px; color:var(--parchment-dim);
+    border-top:1px solid var(--line); margin-top:20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="static-overlay" aria-hidden="true"></div>
+
+<header class="topbar">
+  <span>EAST TEXAS UNIVERSITY STUDENT BROADCAST</span>
+  <span class="call-sign">88.9 FM · KETU · NACOGDOCHES CO.</span>
+</header>
+
+<section class="hero">
+  <div class="dial-wrap" tabindex="0" aria-label="Station frequency dial, tuned to 88.9 FM">
+    <svg viewBox="0 0 380 380">
+      <circle cx="190" cy="190" r="172" fill="var(--pine-900)" stroke="var(--line)" stroke-width="1"/>
+      <circle cx="190" cy="190" r="150" fill="none" stroke="var(--line)" stroke-width="1"/>
+      <!-- frequency ticks -->
+      <g stroke="var(--parchment-dim)" stroke-width="1" opacity="0.55">
+        <line x1="190" y1="40" x2="190" y2="52"/>
+        <line x1="270" y1="62" x2="262" y2="72"/>
+        <line x1="330" y1="122" x2="318" y2="130"/>
+        <line x1="352" y1="190" x2="338" y2="190"/>
+        <line x1="330" y1="258" x2="318" y2="250"/>
+        <line x1="270" y1="318" x2="262" y2="308"/>
+        <line x1="190" y1="340" x2="190" y2="328"/>
+        <line x1="110" y1="318" x2="118" y2="308"/>
+        <line x1="50" y1="258" x2="62" y2="250"/>
+        <line x1="28" y1="190" x2="42" y2="190"/>
+        <line x1="50" y1="122" x2="62" y2="130"/>
+        <line x1="110" y1="62" x2="118" y2="72"/>
+      </g>
+      <text x="190" y="34" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">88</text>
+      <text x="352" y="194" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">96</text>
+      <text x="190" y="352" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">104</text>
+      <text x="30" y="194" text-anchor="middle" fill="var(--parchment-dim)" font-family="Special Elite, cursive" font-size="10">80</text>
+
+      <circle cx="190" cy="190" r="118" fill="var(--pine-950)" stroke="var(--rust)" stroke-width="1.5"/>
+
+      <g class="needle">
+        <line x1="190" y1="190" x2="190" y2="78" stroke="var(--rust-bright)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="190" cy="190" r="9" fill="var(--brass)"/>
+      </g>
+    </svg>
+    <div class="dial-freq-readout">88.9 MHz</div>
+  </div>
+
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="rec-dot" aria-hidden="true"></span> ON AIR NOW</p>
+    <h1>KETU<span>.</span></h1>
+    <p class="freq-line">Voice of the Piney Woods, 88.9 FM</p>
+    <p class="typewriter-line">
+      Broadcasting out of the basement of the Old Comm building, whenever the transmitter
+      feels like cooperating. Station idents, campus bulletins, and whatever else drifts
+      in over the antenna after dark. Tune in below.
+    </p>
+  </div>
+</section>
+
+<main class="section" id="library">
+  <div class="section-head">
+    <h2>On the Log</h2>
+    <span class="count" id="track-count">0 cuts filed</span>
+  </div>
+  <div id="catalog-root"></div>
+</main>
+
+<footer>
+  KETU is a fictional student station built for a Savage Worlds Adventure Edition
+  campaign set at East Texas University. Not a real broadcaster. Do not attempt to tune in on an actual radio.
+</footer>
+
+<div class="player-bar" role="region" aria-label="Audio player">
+  <div class="transport">
+    <button id="prev-btn" title="Previous" aria-label="Previous track">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg>
+    </button>
+    <button id="play-btn" title="Play" aria-label="Play">
+      <svg id="play-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="pause-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+    </button>
+    <button id="next-btn" title="Next" aria-label="Next track">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+    </button>
+  </div>
+
+  <div class="now-playing">
+    <div class="np-label">NOW ON THE AIR</div>
+    <div class="np-title" id="np-title">Nothing queued — station is off air</div>
+  </div>
+
+  <div class="vu" id="vu" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="scrub">
+    <time id="time-current">0:00</time>
+    <input type="range" id="seek" min="0" max="100" value="0" aria-label="Seek">
+    <time id="time-total">0:00</time>
+  </div>
+
+  <audio id="audio-el" preload="none"></audio>
+</div>
+
+<script>
+/* =========================================================================
+   KETU TRACK LOG
+   Add one entry per clip. `src` is the path to the audio file relative to
+   this page — drop your files into an /audio folder next to index.html
+   (or point src at a full URL if you're hosting audio elsewhere) and list
+   them here. `category` groups clips into sections on the page.
+   ========================================================================= */
+const TRACKS = [
+  // { title: "Station ID — 88.9 KETU", category: "Station IDs", src: "audio/station-id-01.mp3" },
+  // { title: "Campus Safety Bulletin", category: "Bulletins & PSAs", src: "audio/psa-campus-safety.mp3" },
+  // { title: "Late Night Ambient Bed", category: "Music & Ambience", src: "audio/ambient-late-night.mp3" },
+  // { title: "Nine O'Clock Campus News", category: "News Break", src: "audio/news-0900.mp3" },
+];
+
+const catalogRoot = document.getElementById('catalog-root');
+const trackCountEl = document.getElementById('track-count');
+const audio = document.getElementById('audio-el');
+const playBtn = document.getElementById('play-btn');
+const playIcon = document.getElementById('play-icon');
+const pauseIcon = document.getElementById('pause-icon');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const npTitle = document.getElementById('np-title');
+const seek = document.getElementById('seek');
+const timeCurrent = document.getElementById('time-current');
+const timeTotal = document.getElementById('time-total');
+const vu = document.getElementById('vu');
+
+let currentIndex = -1;
+
+function formatTime(s){
+  if(!isFinite(s)) return '0:00';
+  const m = Math.floor(s/60);
+  const sec = Math.floor(s%60).toString().padStart(2,'0');
+  return `${m}:${sec}`;
+}
+
+function renderCatalog(){
+  if(TRACKS.length === 0){
+    catalogRoot.innerHTML = `
+      <div class="empty-state">
+        <strong>Nothing filed on the log yet.</strong>
+        Open index.html and add entries to the TRACKS list near the bottom of the
+        file — a title, a category, and a path to the audio file. Drop your audio
+        files in an /audio folder alongside this page and they'll show up here.
+      </div>`;
+    trackCountEl.textContent = '0 cuts filed';
+    return;
+  }
+
+  trackCountEl.textContent = `${TRACKS.length} cut${TRACKS.length===1?'':'s'} filed`;
+
+  const groups = {};
+  TRACKS.forEach((t, i) => {
+    const cat = t.category || 'Uncategorized';
+    (groups[cat] = groups[cat] || []).push({...t, index:i});
+  });
+
+  catalogRoot.innerHTML = '';
+  Object.entries(groups).forEach(([cat, items]) => {
+    const head = document.createElement('div');
+    head.className = 'section-head';
+    head.style.marginTop = '8px';
+    head.innerHTML = `<h2 style="font-size:18px;">${cat}</h2><span class="count">${items.length}</span>`;
+    catalogRoot.appendChild(head);
+
+    const grid = document.createElement('div');
+    grid.className = 'catalog';
+    items.forEach(item => {
+      const card = document.createElement('button');
+      card.className = 'card';
+      card.type = 'button';
+      card.dataset.index = String(item.index + 1).padStart(3,'0');
+      card.setAttribute('data-track-index', item.index);
+      card.innerHTML = `
+        <div class="card-top">
+          <span class="card-play-icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span class="card-title">${item.title}</span>
+        </div>
+        <span class="card-meta">${item.category || ''}</span>
+      `;
+      card.addEventListener('click', () => loadTrack(item.index, true));
+      grid.appendChild(card);
+    });
+    catalogRoot.appendChild(grid);
+  });
+}
+
+function updateCardHighlight(){
+  document.querySelectorAll('.card').forEach(c => {
+    c.classList.toggle('is-playing', Number(c.getAttribute('data-track-index')) === currentIndex);
+  });
+}
+
+function loadTrack(index, autoplay){
+  if(index < 0 || index >= TRACKS.length) return;
+  currentIndex = index;
+  const t = TRACKS[index];
+  audio.src = t.src;
+  npTitle.textContent = t.title;
+  updateCardHighlight();
+  if(autoplay){
+    audio.play().catch(() => {});
+  }
+}
+
+function togglePlay(){
+  if(TRACKS.length === 0) return;
+  if(currentIndex === -1){ loadTrack(0, true); return; }
+  if(audio.paused){ audio.play().catch(()=>{}); } else { audio.pause(); }
+}
+
+playBtn.addEventListener('click', togglePlay);
+prevBtn.addEventListener('click', () => {
+  if(TRACKS.length === 0) return;
+  const next = currentIndex <= 0 ? TRACKS.length - 1 : currentIndex - 1;
+  loadTrack(next, true);
+});
+nextBtn.addEventListener('click', () => {
+  if(TRACKS.length === 0) return;
+  const next = currentIndex >= TRACKS.length - 1 ? 0 : currentIndex + 1;
+  loadTrack(next, true);
+});
+
+audio.addEventListener('play', () => {
+  playIcon.style.display = 'none';
+  pauseIcon.style.display = 'block';
+  vu.classList.add('is-active');
+});
+audio.addEventListener('pause', () => {
+  playIcon.style.display = 'block';
+  pauseIcon.style.display = 'none';
+  vu.classList.remove('is-active');
+});
+audio.addEventListener('ended', () => nextBtn.click());
+
+audio.addEventListener('timeupdate', () => {
+  if(!isFinite(audio.duration)) return;
+  seek.value = (audio.currentTime / audio.duration) * 100;
+  timeCurrent.textContent = formatTime(audio.currentTime);
+});
+audio.addEventListener('loadedmetadata', () => {
+  timeTotal.textContent = formatTime(audio.duration);
+});
+seek.addEventListener('input', () => {
+  if(!isFinite(audio.duration)) return;
+  audio.currentTime = (seek.value / 100) * audio.duration;
+});
+
+/* Faux VU meter animation while playing */
+let vuTimer = null;
+function animateVU(){
+  const bars = vu.querySelectorAll('span');
+  bars.forEach(b => {
+    const h = audio.paused ? 4 : Math.random() * 18 + 4;
+    b.style.height = h + 'px';
+  });
+}
+vuTimer = setInterval(animateVU, 140);
+
+/* Dial nudge on load for a little life */
+window.addEventListener('load', () => {
+  const needle = document.querySelector('.needle');
+  if(needle){
+    needle.style.transform = 'rotate(-2deg)';
+    setTimeout(() => { needle.style.transform = 'rotate(0deg)'; }, 500);
+  }
+});
+
+renderCatalog();
+</script>
+
+</body>
+</html>
