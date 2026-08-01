@@ -7,6 +7,7 @@ SID1.mp3
 
 [Music & Ambience]
 Behind the Walls.mp3
+The Whittler.mp3
 
 [Bulletins & PSAs]
 PSA recycle.mp3
@@ -188,6 +189,7 @@ patter earworm.mp3
 
 [Music & Ambience]
 The Deal Comes Due.mp3
+The Unassigned Bunk.mp3
 
 [DJ Patter]
 Patter the drill.mp3
@@ -218,6 +220,7 @@ Patter Hands.mp3
 
 [Music & Ambience]
 The Woods Have Rules.mp3
+Shadow People.mp3
 
 [Bulletins & PSAs]
 PSa weather.mp3
