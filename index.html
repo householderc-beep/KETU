@@ -481,7 +481,7 @@ function loadTrack(idx, autoplay){
 function tuneIn(){
   if(TRACKS.length === 0) return;
   if(currentIndex === -1){
-    loadTrack(0, true);
+    loadTrack(Math.floor(Math.random() * TRACKS.length), true);
   }else{
     audio.play().catch(() => {});
   }
