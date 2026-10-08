@@ -234,7 +234,7 @@
   .signal{display:flex; align-items:flex-end; gap:3px; height:22px; flex:none;}
   .signal span{
     width:4px; background:var(--pine-700); border-radius:1px;
-    transition:height 0.12s ease, background 0.12s ease;
+    transition:background 0.2s ease;
     height:4px;
   }
   .signal.is-active span{background:var(--rust-bright);}
@@ -372,9 +372,9 @@
    new group, and every non-empty line under it is an audio filename (must
    live in the /audio folder). The order in playlist.txt IS the broadcast
    order — top to bottom, then loops. Listeners can't pick a track or skip;
-   they can only tune in or out. Playback advances through the list in
-   order and loops at the end — each listener's player runs independently,
-   there's no attempt to keep everyone in sync with each other.
+   they can only tune in or out. Each listener's player runs independently
+   and remembers where it was (even across visits), so coming back picks
+   up right where you left off.
    ========================================================================= */
 const PLAYLIST_FILE = 'playlist.txt';
 
@@ -389,6 +389,14 @@ const GENERIC_NOWPLAYING = {
   'ads & sponsors': 'Sponsor Message',
 };
 
+/* If a track hasn't started producing sound within this many seconds of
+   being asked to play (dead link, stuck download, unsupported file), the
+   station gives up on it and moves to the next one. */
+const STALL_TIMEOUT_SEC = 25;
+
+/* Where the listener's spot in the broadcast is remembered between visits. */
+const RESUME_KEY = 'ketu-resume-v1';
+
 let TRACKS = [];
 
 const audio = document.getElementById('audio-el');
@@ -402,10 +410,15 @@ const timeCurrent = document.getElementById('time-current');
 const timeTotal = document.getElementById('time-total');
 const progressFill = document.getElementById('progress-fill');
 const signal = document.getElementById('signal');
+const signalBars = Array.from(signal.querySelectorAll('span'));
 
 let tunedIn = false;
 let currentIndex = -1;
 let primedNextIndex = -1;
+let pendingSeek = 0;          // resume point applied once the track's metadata loads
+let consecutiveFailures = 0;  // how many tracks in a row failed to play
+let lastProgressAt = 0;       // performance.now() of the last time playback advanced
+let lastSaveAt = 0;
 
 function formatTime(s){
   if(!isFinite(s) || s < 0) return '0:00';
@@ -439,9 +452,11 @@ async function loadPlaylist(){
           currentCategory = headerMatch[1].trim();
         }else{
           acc.push({
+            file: line,
             title: titleFromFilename(line),
             category: currentCategory,
-            src: `audio/${line}`,
+            /* encoded so names with #, ?, % etc. can't break the URL */
+            src: `audio/${encodeURIComponent(line)}`,
           });
         }
         return acc;
@@ -451,6 +466,37 @@ async function loadPlaylist(){
   }
   if(TRACKS.length === 0){
     npTitle.textContent = 'Nothing scheduled — add files to playlist.txt';
+  }
+}
+
+/* ---------- remembering your spot ---------- */
+function saveResume(){
+  if(currentIndex < 0 || !TRACKS[currentIndex]) return;
+  try{
+    localStorage.setItem(RESUME_KEY, JSON.stringify({
+      file: TRACKS[currentIndex].file,
+      index: currentIndex,
+      time: isFinite(audio.currentTime) ? audio.currentTime : 0,
+    }));
+  }catch(e){ /* storage blocked or full — not fatal */ }
+}
+
+function readResume(){
+  try{
+    const raw = localStorage.getItem(RESUME_KEY);
+    if(!raw) return null;
+    const saved = JSON.parse(raw);
+    /* Find the saved clip by name first, so edits to playlist.txt don't
+       throw people into the wrong spot; fall back to the old position. */
+    let idx = TRACKS.findIndex(t => t.file === saved.file);
+    let time = Number(saved.time) || 0;
+    if(idx === -1){
+      idx = Math.min(Math.max(parseInt(saved.index, 10) || 0, 0), TRACKS.length - 1);
+      time = 0;
+    }
+    return { index: idx, time };
+  }catch(e){
+    return null;
   }
 }
 
@@ -469,23 +515,56 @@ function primeTrack(idx){
   preloadedAudioEl.src = TRACKS[idx].src;
 }
 
-function loadTrack(idx, autoplay){
+function loadTrack(idx, autoplay, startAt){
   currentIndex = idx;
+  pendingSeek = startAt > 0 ? startAt : 0;
   audio.src = TRACKS[idx].src;
   npTitle.textContent = getDisplayTitle(TRACKS[idx]);
+  timeCurrent.textContent = '0:00';
+  timeTotal.textContent = '0:00';
+  progressFill.style.width = '0%';
   primedNextIndex = -1;
   preloadedAudioEl = null;
+  lastProgressAt = performance.now();
+  updateMediaSession();
+  saveResume();
   if(autoplay) audio.play().catch(() => {});
+}
+
+function advance(){
+  if(TRACKS.length === 0) return;
+  loadTrack((currentIndex + 1) % TRACKS.length, tunedIn, 0);
+}
+
+/* A track that can't be played (missing, misnamed, corrupt, unsupported)
+   gets skipped instead of leaving the station silent. If every single
+   track fails in a row, stop trying and say so. */
+function handleBadTrack(){
+  if(!tunedIn || TRACKS.length === 0) return;
+  consecutiveFailures++;
+  if(consecutiveFailures >= TRACKS.length){
+    tuneOut();
+    npTitle.textContent = 'Dead air — the transmitter can’t reach any tracks';
+    consecutiveFailures = 0;
+    return;
+  }
+  advance();
 }
 
 function tuneIn(){
   if(TRACKS.length === 0) return;
+  tunedIn = true;
   if(currentIndex === -1){
-    loadTrack(Math.floor(Math.random() * TRACKS.length), true);
+    const resume = readResume();
+    if(resume){
+      loadTrack(resume.index, true, resume.time);
+    }else{
+      loadTrack(Math.floor(Math.random() * TRACKS.length), true, 0);
+    }
   }else{
+    lastProgressAt = performance.now();
     audio.play().catch(() => {});
   }
-  tunedIn = true;
   npStatus.textContent = 'ON AIR';
   onairDot.style.display = 'inline-block';
   tuneOnIcon.style.display = 'none';
@@ -493,11 +572,13 @@ function tuneIn(){
   tuneBtn.setAttribute('aria-label', 'Tune out');
   tuneBtn.title = 'Tune out';
   signal.classList.add('is-active');
+  setMediaSessionState('playing');
 }
 
 function tuneOut(){
   audio.pause();
   tunedIn = false;
+  saveResume();
   npStatus.textContent = 'SIGNAL — NOT TUNED IN';
   onairDot.style.display = 'none';
   tuneOnIcon.style.display = 'block';
@@ -505,18 +586,33 @@ function tuneOut(){
   tuneBtn.setAttribute('aria-label', 'Tune in');
   tuneBtn.title = 'Tune in';
   signal.classList.remove('is-active');
+  setMediaSessionState('paused');
 }
 
 tuneBtn.addEventListener('click', () => {
   if(tunedIn) tuneOut(); else tuneIn();
 });
 
-audio.addEventListener('ended', () => {
-  if(TRACKS.length === 0) return;
-  loadTrack((currentIndex + 1) % TRACKS.length, true);
+audio.addEventListener('loadedmetadata', () => {
+  if(pendingSeek > 0){
+    /* don't resume into the last couple of seconds of a clip */
+    if(isFinite(audio.duration) && pendingSeek < audio.duration - 2){
+      try{ audio.currentTime = pendingSeek; }catch(e){}
+    }
+    pendingSeek = 0;
+  }
 });
 
+audio.addEventListener('playing', () => {
+  consecutiveFailures = 0;
+  lastProgressAt = performance.now();
+});
+
+audio.addEventListener('ended', advance);
+audio.addEventListener('error', handleBadTrack);
+
 audio.addEventListener('timeupdate', () => {
+  lastProgressAt = performance.now();
   if(!isFinite(audio.duration)) return;
   timeCurrent.textContent = formatTime(audio.currentTime);
   timeTotal.textContent = formatTime(audio.duration);
@@ -524,7 +620,90 @@ audio.addEventListener('timeupdate', () => {
   if(audio.duration - audio.currentTime <= 6){
     primeTrack((currentIndex + 1) % TRACKS.length);
   }
+  if(lastProgressAt - lastSaveAt > 5000){
+    lastSaveAt = lastProgressAt;
+    saveResume();
+  }
 });
+
+/* Stall watchdog: catches the cases that never fire an 'error' event —
+   a request that hangs forever, or a file the browser silently chokes on.
+   Only counts time while we're tuned in, the tab isn't paused by the user,
+   and the page is visible-or-playing, so slow phones aren't punished for
+   backgrounding the tab. */
+setInterval(() => {
+  if(!tunedIn || TRACKS.length === 0) return;
+  if(audio.paused && audio.readyState >= 3) return; // paused by the OS/browser, not stuck
+  const stuckFor = (performance.now() - lastProgressAt) / 1000;
+  if(stuckFor > STALL_TIMEOUT_SEC) handleBadTrack();
+}, 2000);
+
+/* Remember the spot when the page is closed or hidden. */
+window.addEventListener('pagehide', saveResume);
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'hidden') saveResume();
+});
+
+/* ---------- lock screen / headset controls ----------
+   Shows KETU on the phone lock screen with the same spoiler-safe label as
+   the page. Only play/pause are wired up — skip and seek are deliberately
+   switched off, so the "no skipping" rule holds there too. */
+function updateMediaSession(){
+  if(!('mediaSession' in navigator) || currentIndex < 0) return;
+  try{
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: getDisplayTitle(TRACKS[currentIndex]),
+      artist: 'KETU 90.1 FM',
+      album: 'East Texas University Student Broadcast',
+    });
+  }catch(e){}
+}
+function setMediaSessionState(state){
+  if(!('mediaSession' in navigator)) return;
+  try{ navigator.mediaSession.playbackState = state; }catch(e){}
+}
+if('mediaSession' in navigator){
+  const set = (action, fn) => { try{ navigator.mediaSession.setActionHandler(action, fn); }catch(e){} };
+  set('play', () => { if(!tunedIn) tuneIn(); });
+  set('pause', () => { if(tunedIn) tuneOut(); });
+  set('stop', () => { if(tunedIn) tuneOut(); });
+  ['nexttrack','previoustrack','seekforward','seekbackward','seekto'].forEach(a => set(a, null));
+}
+
+/* ---------- signal meter ----------
+   Bars dance while sound is actually coming out, and settle flat when
+   tuned out or buffering. It's a stylised meter (randomised, smoothed),
+   not a true level reading — real analysis would route the audio through
+   Web Audio, which stops background playback on some phones. */
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const BAR_MIN = 4, BAR_MAX = 22;
+const barLevels = signalBars.map(() => BAR_MIN);
+const barTargets = signalBars.map(() => BAR_MIN);
+let lastBarTick = 0;
+
+function animateSignal(now){
+  const live = tunedIn && !audio.paused && !audio.seeking && audio.readyState >= 3;
+  if(reduceMotion){
+    const h = live ? 12 : BAR_MIN;
+    signalBars.forEach(b => { b.style.height = h + 'px'; });
+  }else{
+    if(now - lastBarTick > 110){
+      lastBarTick = now;
+      const pulse = 0.55 + 0.45 * Math.sin(now / 420);  // slow swell, like a voice/track breathing
+      barTargets.forEach((_, i) => {
+        if(!live){ barTargets[i] = BAR_MIN; return; }
+        const shape = 1 - Math.abs(i - (signalBars.length - 1) / 2) / signalBars.length; // fuller in the middle
+        barTargets[i] = BAR_MIN + (BAR_MAX - BAR_MIN) * Math.min(1, Math.random() * 0.75 * pulse + shape * 0.35);
+      });
+    }
+    barLevels.forEach((lvl, i) => {
+      barLevels[i] = lvl + (barTargets[i] - lvl) * 0.28;
+      signalBars[i].style.height = barLevels[i].toFixed(1) + 'px';
+    });
+  }
+  requestAnimationFrame(animateSignal);
+}
+requestAnimationFrame(animateSignal);
 
 window.addEventListener('load', () => {
   const needle = document.querySelector('.needle');

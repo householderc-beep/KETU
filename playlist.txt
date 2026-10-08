@@ -1,148 +1,33 @@
 [Music & Ambience]
-Already Found You.mp3
-Backwoods Son.mp3
-
-[Station IDs]
-SID1.mp3
-
-[Music & Ambience]
-Behind the Walls.mp3
-The Whittler.mp3
-
-[Bulletins & PSAs]
-PSA recycle.mp3
-
-[Music & Ambience]
-Black Howler.mp3
-
-[DJ Patter]
-Patter Lock doors.mp3
-
-[Music & Ambience]
-Bloody Mary.mp3
-Can't Sleep 1.mp3
-
-[DJ Patter]
-Patter Long week.mp3
+On All Fours.mp3
+Four Points Down.mp3
 
 [Ads & Sponsors]
 brazenHussey.m4a
 
 [DJ Patter]
-Patter Enough Chatter.mp3
+Patter Out.mp3
 
 [Music & Ambience]
-First Taste.mp3
-Full Moon Fever.mp3
-
-[DJ Patter]
-patter bring snacks.mp3
-
-[DJ Patter]
-mermaid question.mp3
-
-[Music & Ambience]
-She's Callin'.mp3
-
-[DJ Patter]
-siren answer.mp3
-
-[DJ Patter]
-PatterC car chase.mp3
-
-[Music & Ambience]
-Graveyard Ghoul.mp3
-Hellhound at the Door.mp3
-
-[DJ Patter]
-Patter Im AI.mp3
-
-[Music & Ambience]
-Can't Wake.mp3
-chumani.mp3
-
-[DJ Patter]
-Patter AbFav.mp3
-
-[Ads & Sponsors]
-Cinema.mp3
-
-[DJ Patter]
-Patter Zero Plans.mp3
-
-[Music & Ambience]
-Closer Every Year.mp3
-Count the Inches.mp3
-
-[Station IDs]
-SID2.mp3
-
-[Music & Ambience]
-Don't Answer the Call.mp3
-First Taste.mp3
-
-[DJ Patter]
-PSA BoFands.mp3
-
-[Music & Ambience]
-Full Moon Fever.mp3
-In the Thicket.mp3
-
-[DJ Patter]
-counsel.mp3
-
-[DJ Patter]
-Chup question.mp3
-
-[Music & Ambience]
-Goat-Sucker.mp3
-
-[DJ Patter]
-Chup answer.mp3
-
-[DJ Patter]
-Patter Blood drive.mp3
-
-[Ads & Sponsors]
-GenMart Groceries.mp3
-
-[Music & Ambience]
-Highway Ninety-Six.mp3
+Kneelin' in the Dark.mp3
 I Broke My Promise.mp3
 
 [Bulletins & PSAs]
-PSA faire.mp3
+PSA Mic.mp3
 
 [DJ Patter]
-Patter Weather.mp3
+Patter 3 people.mp3
 
 [Music & Ambience]
-I Don't See You On the Menu.mp3
+Can't Sleep, Can't Sleep rock.mp3
 In the Wire.m4a
 
-[DJ Patter]
-Patter Less Talking.mp3
-
-[Music & Ambience]
-It Already Knows the Way.mp3
-Kneelin' in the Dark.mp3
-
-
-[DJ Patter]
-PatterC sound outside.mp3
-
 [Station IDs]
-SID3.mp3
+SID5.mp3
 
 [Music & Ambience]
-Little Peril.mp3
-Melon Heads.mp3
-
-[DJ Patter]
-Patter Night guard.mp3
-
-[Ads & Sponsors]
-Mom's Diner.mp3
+Closer Every Year.mp3
+First Taste.mp3
 
 [DJ Patter]
 Dogman question.mp3
@@ -153,55 +38,93 @@ Outrun the Dogman.mp3
 [DJ Patter]
 Dogman answer.mp3
 
-[Ads & Sponsors]
-ElTejano.mp3
-
-[DJ Patter]
-PatterC thicket.mp3
-
 [Music & Ambience]
-Redcap.mp3
-Revenant on the Quad.mp3
-
-[DJ Patter]
-Patter What I look like.mp3
-
-[Music & Ambience]
-She's the Fire.mp3
-Snake People of Blackburn.mp3
-
-[DJ Patter]
-PatterC RavenEats.mp3
-
-[Music & Ambience]
-Somebody's Still Livin' Here.mp3
-Somethin' in the Fog.mp3
-
-[Bulletins & PSAs]
-PSa FLu.mp3
-
-[Music & Ambience]
-Somethin' in the Water.mp3
-Can't Sleep 2.mp3
+The Voice on the Tape.mp3
+Bloody Mary.mp3
 
 [DJ Patter]
 patter earworm.mp3
 
 [Music & Ambience]
-The Deal Comes Due.mp3
-The Unassigned Bunk.mp3
+Crazy in the Woods.mp3
+Waitin' on the Dark slow2.mp3
+
+[Ads & Sponsors]
+Cinema.mp3
 
 [DJ Patter]
-Patter the drill.mp3
+PatterC thicket.mp3
 
 [Music & Ambience]
 The Devil Don't Forget.mp3
+Which Face Do You Want.mp3
 
 [Bulletins & PSAs]
-PSA Mic.mp3
+PSA faire.mp3
 
 [DJ Patter]
-PatterC Camping.mp3
+PatterC sound outside.mp3
+
+[Music & Ambience]
+The Unassigned Bunk.mp3
+Revenant on the Quad.mp3
+
+[Ads & Sponsors]
+NNad.mp3
+
+[DJ Patter]
+Patter Long week.mp3
+
+[Music & Ambience]
+Highway Ninety-Six.mp3
+Somethin' in the Water.mp3
+
+[DJ Patter]
+mermaid question.mp3
+
+[Music & Ambience]
+She's Callin'.mp3
+
+[DJ Patter]
+siren answer.mp3
+
+[Music & Ambience]
+The Deal Comes Due.mp3
+Somethin' Risin'.mp3
+
+[Station IDs]
+SID2.mp3
+
+[DJ Patter]
+Patter Hands.mp3
+
+[Music & Ambience]
+Somebody's Still Livin' Here.mp3
+The Scarecrow Man.mp3
+
+[Bulletins & PSAs]
+PSA BoBands.mp3
+
+[Music & Ambience]
+Shadow People.mp3
+Ghouls in the Graveyard.mp3
+
+[DJ Patter]
+Patter Zero Plans.mp3
+
+[Music & Ambience]
+She's the Fire.mp3
+Bloody Mary Jesse.mp3
+
+[Ads & Sponsors]
+LHuges.mp3
+
+[DJ Patter]
+patter bring snacks.mp3
+
+[Music & Ambience]
+Whistle on the Blackburn Line.mp3
+Black Howler.m4a
 
 [DJ Patter]
 Banshee question.mp3
@@ -213,24 +136,45 @@ The Banshee's Keen.mp3
 banshee answer.mp3
 
 [Music & Ambience]
-The Scarecrow Man.mp3
+Melon Heads.mp3
+In the Thicket.mp3
+
+[Ads & Sponsors]
+ElTejano.mp3
 
 [DJ Patter]
-Patter Hands.mp3
+Patter the drill.mp3
 
 [Music & Ambience]
-The Woods Have Rules.mp3
-Shadow People.mp3
+Safety's Just a Bigger.mp3
+Can't Sleep 2.mp3
+
+[Station IDs]
+SID1.mp3
+
+[DJ Patter]
+Patter Less Talking.mp3
+
+[Music & Ambience]
+Backwoods Son.mp3
+Count the Inches.mp3
 
 [Bulletins & PSAs]
 PSa weather.mp3
 
-[Ads & Sponsors]
-NNad.mp3
+[DJ Patter]
+Patter shoutout.mp3
 
 [Music & Ambience]
-The Ghost Ship.mp3
-The Grass Don't Let You Leave.mp3
+Outrun the Dogman.m4a
+Vampire Blues.mp3
+
+[Ads & Sponsors]
+texmex.mp3
+
+[Music & Ambience]
+Hellhound at the Door.mp3
+Already Found You.mp3
 
 [DJ Patter]
 Bell Witch question.mp3
@@ -241,24 +185,103 @@ The Bell Witch.mp3
 [DJ Patter]
 Bell witch answer.mp3
 
+[Music & Ambience]
+HideBehind.m4a
+Behind the Walls.mp3
+
+[DJ Patter]
+Patter Have a plan.mp3
+
+[Music & Ambience]
+Nope, Not Doin' It.mp3
+Wrong Number.mp3
+
+[Bulletins & PSAs]
+PSA recycle.mp3
+
+[DJ Patter]
+Patter Im AI.mp3
+
+[Music & Ambience]
+Two Ghosts Ridin' in the Dark.mp3
+Don't Answer the Call.mp3
+
+[Station IDs]
+SID3.mp3
+
+[DJ Patter]
+Patter Blood drive.mp3
+
+[Music & Ambience]
+Ravens fight.mp3
+Blinking Red.mp3
+
 [Ads & Sponsors]
 PizzaBarnJingle.mp3
 
-
-
-[Music & Ambience]
-Too Many Legs.mp3
-Two Ghosts Ridin' in the Dark.mp3
-
-[Station IDs]
-SID4.mp3
+[DJ Patter]
+PatterC Camping.mp3
 
 [Music & Ambience]
-Vampire Blues.mp3
-Waitin' on the Dark slow2.mp3
+Can't Sleep 1.mp3
+Somethin's Under.mp3
+
+[Ads & Sponsors]
+GenMart Groceries.mp3
 
 [DJ Patter]
-Patter 3 people.mp3
+Patter What I look like.mp3
+
+[Music & Ambience]
+chumani.mp3
+Too Many Legs.mp3
+
+[DJ Patter]
+Chup question.mp3
+
+[Music & Ambience]
+Goat-Sucker.mp3
+
+[DJ Patter]
+Chup answer.mp3
+
+[Music & Ambience]
+Dry As Leather.mp3
+Krueger Crossroads.mp3
+
+[Bulletins & PSAs]
+PSa FLu.mp3
+
+[Music & Ambience]
+Full Moon Fever.mp3
+Little Peril.mp3
+
+[DJ Patter]
+PatterC RavenEats.mp3
+
+[Music & Ambience]
+Black Howler.mp3
+Won't You Let Us In.mp3
+
+[Station IDs]
+TrustMe.mp3
+
+[DJ Patter]
+Patter Weather.mp3
+
+[Music & Ambience]
+Waitin' on the Dark.mp3
+Man in the Mirror.mp3
+
+[Ads & Sponsors]
+SCCAd.mp3
+
+[DJ Patter]
+counsel.mp3
+
+[Music & Ambience]
+Somethin' in the Fog.mp3
+It Already Knows the Way.mp3
 
 [DJ Patter]
 Wendigo question.mp3
@@ -269,27 +292,43 @@ The Hungry Winter.mp3
 [DJ Patter]
 Wendigo answer.mp3
 
+[Music & Ambience]
+Bell Witch.m4a
+Can't Wake.mp3
+
+[Bulletins & PSAs]
+raccoons.mp3
+
 [DJ Patter]
-Patter shoutout.mp3
+PatterC car chase.mp3
 
 [Music & Ambience]
-Waitin' on the Dark.mp3
-Ward Twelve.mp3
+She Writes It.mp3
+Hungry for You.mp3
 
 [Ads & Sponsors]
-PizzaBarnJingle.mp3
-
-[Station IDs]
-SID5.mp3
-
-[Music & Ambience]
-Nope, Not Doin' It.mp3
+Burger Clown.mp3
 
 [DJ Patter]
-Patter Out.mp3
+Patter Enough Chatter.mp3
 
 [Music & Ambience]
-Won't You Let Us In.mp3
+Ward Twelve.mp3
+Redcap.mp3
+
+[Station IDs]
+SID4.mp3
+
+[Music & Ambience]
+The Grass Don't Let You Leave.mp3
+I Don't See You On the Menu.mp3
+
+[DJ Patter]
+Patter AbFav.mp3
+
+[Music & Ambience]
+Snake People of Blackburn.mp3
+The Woods Have Rules.mp3
 
 [DJ Patter]
 Hidebehind question.mp3
@@ -301,26 +340,27 @@ The Hidebehind.mp3
 hidebehind answer.mp3
 
 [Music & Ambience]
-Somethin's Under.mp3
-Whistle on the Blackburn Line.mp3
+The Whittler.mp3
+Nope.mp3
+
+[Bulletins & PSAs]
+Warning.mp3
 
 [DJ Patter]
-Patter Have a plan.mp3
-
-[Ads & Sponsors]
-SCCAd.mp3
+Patter Lock doors.mp3
 
 [Music & Ambience]
-Wrong Number.mp3
+Wilson Blood.mp3
+The Ghost Ship.mp3
 
+[Ads & Sponsors]
+Mom's Diner.mp3
 
+[DJ Patter]
+Patter Night guard.mp3
 
+[Music & Ambience]
+Don't Bring Shovels Past the.mp3
 
-
-
-
-
-
-
-
-
+[DJ Patter]
+good night.mp3
