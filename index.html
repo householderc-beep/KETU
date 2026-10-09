@@ -35,7 +35,7 @@
     color:var(--parchment);
     font-family:'Inter',sans-serif;
     -webkit-font-smoothing:antialiased;
-    padding-bottom:104px; /* room for sticky player */
+    padding-bottom:120px; /* room for sticky player */
   }
 
   a{color:inherit;}
@@ -231,9 +231,9 @@
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
 
-  .signal{display:flex; align-items:flex-end; gap:3px; height:22px; flex:none;}
+  .signal{display:flex; align-items:flex-end; gap:4px; height:40px; flex:none;}
   .signal span{
-    width:4px; background:var(--pine-700); border-radius:1px;
+    width:7px; background:var(--pine-700); border-radius:1px;
     transition:background 0.2s ease;
     height:4px;
   }
@@ -676,7 +676,7 @@ if('mediaSession' in navigator){
    not a true level reading — real analysis would route the audio through
    Web Audio, which stops background playback on some phones. */
 const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const BAR_MIN = 4, BAR_MAX = 22;
+const BAR_MIN = 4, BAR_MAX = 40;
 const barLevels = signalBars.map(() => BAR_MIN);
 const barTargets = signalBars.map(() => BAR_MIN);
 let lastBarTick = 0;
@@ -684,7 +684,7 @@ let lastBarTick = 0;
 function animateSignal(now){
   const live = tunedIn && !audio.paused && !audio.seeking && audio.readyState >= 3;
   if(reduceMotion){
-    const h = live ? 12 : BAR_MIN;
+    const h = live ? 22 : BAR_MIN;
     signalBars.forEach(b => { b.style.height = h + 'px'; });
   }else{
     if(now - lastBarTick > 110){
