@@ -257,6 +257,55 @@
     .progress-wrap{order:4; flex-basis:100%;}
   }
 
+  /* ---------- hidden engineer's console (GM only) ---------- */
+  .dial-hit{fill:transparent; pointer-events:all; -webkit-tap-highlight-color:transparent;}
+  .dial-freq-readout{-webkit-tap-highlight-color:transparent;}
+  .console{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(10,14,8,0.78);
+    display:flex; align-items:center; justify-content:center;
+    padding:16px;
+  }
+  .console[hidden]{display:none;}
+  .console-box{
+    width:100%; max-width:560px; max-height:min(80vh,720px);
+    display:flex; flex-direction:column;
+    background:var(--pine-900);
+    border:1px solid var(--line); border-top:3px solid var(--maroon-bright);
+    border-radius:var(--radius);
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+  .console-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 16px; border-bottom:1px solid var(--line);
+    font-family:'Special Elite',cursive; font-size:12px; letter-spacing:0.1em; color:var(--rust-bright);
+  }
+  .console-close{
+    background:none; border:1px solid var(--line); color:var(--parchment-dim);
+    width:30px; height:30px; border-radius:var(--radius); cursor:pointer; font-size:16px; line-height:1;
+  }
+  .console-close:hover{color:var(--parchment); border-color:var(--parchment-dim);}
+  .console-search{
+    margin:12px 16px 8px; padding:9px 12px;
+    background:var(--pine-950); color:var(--parchment);
+    border:1px solid var(--line); border-radius:var(--radius);
+    font-family:'Inter',sans-serif; font-size:14px;
+  }
+  .console-search:focus{outline:2px solid var(--brass); outline-offset:0;}
+  .console-list{overflow-y:auto; padding:0 8px 10px; flex:1 1 auto;}
+  .console-row{
+    display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:10px;
+    width:100%; text-align:left; cursor:pointer;
+    background:none; border:0; border-bottom:1px solid var(--line);
+    color:var(--parchment); padding:9px 8px; font-family:'Inter',sans-serif; font-size:14px;
+  }
+  .console-row:hover, .console-row:focus-visible{background:var(--pine-800); outline:none;}
+  .console-row .num{font-family:'Special Elite',cursive; font-size:11px; color:var(--parchment-dim);}
+  .console-row .cat{font-family:'Special Elite',cursive; font-size:10.5px; color:var(--parchment-dim); white-space:nowrap;}
+  .console-row.is-current{background:rgba(140,56,56,0.22);}
+  .console-row.is-current .num{color:var(--rust-bright);}
+  .console-empty{padding:18px 8px; font-family:'Special Elite',cursive; font-size:13px; color:var(--parchment-dim);}
+
   footer{
     max-width:1180px; margin:0 auto; padding:20px 28px 40px;
     font-family:'Special Elite',cursive; font-size:11.5px; color:var(--parchment-dim);
@@ -304,6 +353,7 @@
         <line x1="190" y1="190" x2="190" y2="78" stroke="var(--rust-bright)" stroke-width="2.5" stroke-linecap="round"/>
         <circle cx="190" cy="190" r="9" fill="var(--brass)"/>
       </g>
+      <circle id="dial-hit" class="dial-hit" cx="190" cy="190" r="34"/>
     </svg>
     <div class="dial-freq-readout">90.1 MHz</div>
   </div>
@@ -362,6 +412,17 @@
   </div>
 
   <audio id="audio-el" preload="none"></audio>
+</div>
+
+<div class="console" id="console" hidden>
+  <div class="console-box" role="dialog" aria-modal="true" aria-label="Engineer's console">
+    <div class="console-head">
+      <span>ENGINEER'S CONSOLE — STAFF ONLY</span>
+      <button class="console-close" id="console-close" aria-label="Close">×</button>
+    </div>
+    <input class="console-search" id="console-search" type="search" placeholder="Find a track…" autocomplete="off">
+    <div class="console-list" id="console-list"></div>
+  </div>
 </div>
 
 <script>
@@ -551,9 +612,21 @@ function handleBadTrack(){
   advance();
 }
 
+function setOnAirUI(on){
+  tunedIn = on;
+  npStatus.textContent = on ? 'ON AIR' : 'SIGNAL — NOT TUNED IN';
+  onairDot.style.display = on ? 'inline-block' : 'none';
+  tuneOnIcon.style.display = on ? 'none' : 'block';
+  tuneOffIcon.style.display = on ? 'block' : 'none';
+  tuneBtn.setAttribute('aria-label', on ? 'Tune out' : 'Tune in');
+  tuneBtn.title = on ? 'Tune out' : 'Tune in';
+  signal.classList.toggle('is-active', on);
+  setMediaSessionState(on ? 'playing' : 'paused');
+}
+
 function tuneIn(){
   if(TRACKS.length === 0) return;
-  tunedIn = true;
+  setOnAirUI(true);
   if(currentIndex === -1){
     const resume = readResume();
     if(resume){
@@ -565,28 +638,12 @@ function tuneIn(){
     lastProgressAt = performance.now();
     audio.play().catch(() => {});
   }
-  npStatus.textContent = 'ON AIR';
-  onairDot.style.display = 'inline-block';
-  tuneOnIcon.style.display = 'none';
-  tuneOffIcon.style.display = 'block';
-  tuneBtn.setAttribute('aria-label', 'Tune out');
-  tuneBtn.title = 'Tune out';
-  signal.classList.add('is-active');
-  setMediaSessionState('playing');
 }
 
 function tuneOut(){
   audio.pause();
-  tunedIn = false;
   saveResume();
-  npStatus.textContent = 'SIGNAL — NOT TUNED IN';
-  onairDot.style.display = 'none';
-  tuneOnIcon.style.display = 'block';
-  tuneOffIcon.style.display = 'none';
-  tuneBtn.setAttribute('aria-label', 'Tune in');
-  tuneBtn.title = 'Tune in';
-  signal.classList.remove('is-active');
-  setMediaSessionState('paused');
+  setOnAirUI(false);
 }
 
 tuneBtn.addEventListener('click', () => {
@@ -704,6 +761,99 @@ function animateSignal(now){
   requestAnimationFrame(animateSignal);
 }
 requestAnimationFrame(animateSignal);
+
+/* =========================================================================
+   HIDDEN ENGINEER CONTROLS (for the GM — nothing on screen hints at them)
+   • Click the "90.1 MHz" readout under the dial → skip to the next track.
+   • Long-press (or double-click) the brass knob in the middle of the dial
+     → opens the Engineer's Console: every track with its real name; pick
+     one and the broadcast jumps there and carries on in order from it.
+   ========================================================================= */
+const freqReadout = document.querySelector('.dial-freq-readout');
+const needleEl = document.querySelector('.needle');
+const dialHit = document.getElementById('dial-hit');
+const consoleEl = document.getElementById('console');
+const consoleList = document.getElementById('console-list');
+const consoleSearch = document.getElementById('console-search');
+const consoleClose = document.getElementById('console-close');
+
+function twitchNeedle(){
+  if(!needleEl) return;
+  needleEl.style.transform = 'rotate(16deg)';
+  setTimeout(() => { needleEl.style.transform = 'rotate(0deg)'; }, 380);
+}
+
+function jumpTo(idx){
+  if(idx < 0 || idx >= TRACKS.length) return;
+  twitchNeedle();
+  consecutiveFailures = 0;
+  if(!tunedIn) setOnAirUI(true);
+  loadTrack(idx, true, 0);
+}
+
+freqReadout.addEventListener('click', () => {
+  if(!tunedIn || TRACKS.length === 0) return;
+  jumpTo((currentIndex + 1) % TRACKS.length);
+});
+
+function renderConsole(){
+  const q = consoleSearch.value.trim().toLowerCase();
+  consoleList.textContent = '';
+  let shown = 0;
+  TRACKS.forEach((t, i) => {
+    if(q && !(t.title.toLowerCase().includes(q) || t.category.toLowerCase().includes(q))) return;
+    const row = document.createElement('button');
+    row.type = 'button';
+    row.className = 'console-row' + (i === currentIndex ? ' is-current' : '');
+    const num = document.createElement('span');
+    num.className = 'num';
+    num.textContent = i === currentIndex ? '▶' : String(i + 1).padStart(3, '0');
+    const title = document.createElement('span');
+    title.textContent = t.title;
+    const cat = document.createElement('span');
+    cat.className = 'cat';
+    cat.textContent = t.category;
+    row.append(num, title, cat);
+    row.addEventListener('click', () => { closeConsole(); jumpTo(i); });
+    consoleList.appendChild(row);
+    shown++;
+  });
+  if(shown === 0){
+    const empty = document.createElement('div');
+    empty.className = 'console-empty';
+    empty.textContent = TRACKS.length ? 'Nothing on the log by that name.' : 'Playlist not loaded.';
+    consoleList.appendChild(empty);
+  }
+}
+
+function openConsole(){
+  if(!consoleEl.hidden) return;
+  consoleSearch.value = '';
+  renderConsole();
+  consoleEl.hidden = false;
+  const cur = consoleList.querySelector('.is-current');
+  if(cur) cur.scrollIntoView({ block: 'center' });
+  /* only auto-focus search on devices with a real keyboard, so phones
+     don't throw the on-screen keyboard over the list */
+  if(window.matchMedia('(hover: hover)').matches) consoleSearch.focus();
+}
+function closeConsole(){ consoleEl.hidden = true; }
+
+consoleSearch.addEventListener('input', renderConsole);
+consoleClose.addEventListener('click', closeConsole);
+consoleEl.addEventListener('click', e => { if(e.target === consoleEl) closeConsole(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeConsole(); });
+
+/* long-press on the knob (works for mouse and touch) */
+let holdTimer = null;
+dialHit.addEventListener('pointerdown', () => {
+  clearTimeout(holdTimer);
+  holdTimer = setTimeout(openConsole, 700);
+});
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev =>
+  dialHit.addEventListener(ev, () => clearTimeout(holdTimer)));
+dialHit.addEventListener('dblclick', openConsole);
+dialHit.addEventListener('contextmenu', e => e.preventDefault());
 
 window.addEventListener('load', () => {
   const needle = document.querySelector('.needle');
